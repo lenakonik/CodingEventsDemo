@@ -1,8 +1,40 @@
 ﻿<h1>Coding Events</h1>
 
-<ul>
-    @foreach (string meeting in ViewBag.events)
-    {
-        <li>@meeting</li>
-    }
-</ul>
+<!--<partial name="/Views/Shared/_LinkListPartial.cshtml" />-->
+<br />
+
+<p>
+    <!--Link to Events controller, Add action method (returns Add view)-->
+    <a asp-controller="Events" asp-action="Add">Add Event</a>
+</p>
+<p>
+    <!--Link to Events controller, Add action method (returns Add view)-->
+    <a asp-controller="Events" asp-action="Delete">Delete Event</a>
+</p>
+
+@if (ViewBag.events.Count == 0)
+{
+    <p>No events yet!</p>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in ViewBag.events)
+        {
+            <tr>
+                <td>@ev.Id</td>
+                <td>@ev.Name</td>
+                <td>@ev.Description</td>
+            </tr>
+        }        
+    </tbody>
+</table>
+}
