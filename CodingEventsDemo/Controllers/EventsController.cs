@@ -28,9 +28,30 @@ namespace coding_events_practice.Controllers
 
         [HttpPost]
         [Route("/Events/Add")]
-        public IActionResult NewEvent(string name, string desc)
+        public IActionResult NewEvent(Event newEvent)
         {
-            EventData.Add(new Event(name, desc));
+            EventData.Add(newEvent);
+
+            return Redirect("/Events");
+        }
+
+        [HttpGet]
+        [Route("/Events/Edit/{eventId}")]
+        public IActionResult Edit(int eventId)
+        {
+            Event editingEvent = EventData.GetById(eventId);
+            ViewBag.eventToEdit = editingEvent;
+            ViewBag.title = "Edit Event " + editingEvent.Name + "(id = " + editingEvent.Id + ")";
+            return View();
+        }
+
+        [HttpPost]
+        [Route("/Events/Edit")]
+        public IActionResult SubmitEditEventForm(int eventId, string name, string description)
+        {
+            Event editedEvent = EventData.GetById(eventId);
+            editedEvent.Name = name;
+            editedEvent.Description = description;
 
             return Redirect("/Events");
         }
